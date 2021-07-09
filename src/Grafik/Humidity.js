@@ -1,20 +1,19 @@
-import { Card, Button, Alert } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import ReactApexChart from "react-apexcharts";
 import React, { Component } from "react";
 
 // Data generation
-function getRandomNumber() {
-    // Create random array of objects
-    return Math.round(20 + 80 * Math.random())
-    
-}
+/*function getRandomNumber() {
+  // Create random array of objects
+  return Math.round(20 + 80 * Math.random());
+}*/
 
 class Humidity extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        series: [getRandomNumber()],
+      series: [0],
       options: {
         chart: {
           height: 350,
@@ -54,12 +53,34 @@ class Humidity extends Component {
     };
   }
 
-  componentDidMount() { //Set update interval
+  componentDidMount() {
+    //Set update interval
     window.setInterval(() => {
-      this.setState({
-        series: [getRandomNumber()]
-      })
-    }, 5000)
+
+      fetch('http://www.smartmonitoring.somee.com/api/Data/GetLastData')
+            .then(res => res.json())
+            .then(resJson => {
+              this.setState({ series: [parseInt(Math.round(resJson[0].humidity, 0))] });
+            }).catch(e => 
+                {
+                    console.log('Error : ' + e);
+                });
+
+      /*console.log("Refresh");
+      
+      fetch("http://www.smartmonitoring.somee.com/api/Data/GetLastData")
+        .then((res) => res.json())
+        .then((resJson) => {
+          this.setState({ series: resJson.humidity });
+        })
+        .catch((e) => {
+          console.log("Error : " + e);
+        });*/
+
+      /*this.setState({
+        series: [getRandomNumber()],
+      });*/
+    }, 3000);
   }
 
   render() {

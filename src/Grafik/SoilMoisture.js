@@ -1,19 +1,19 @@
-import { Card, Button, Alert } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import ReactApexChart from "react-apexcharts";
 import React, { Component } from "react";
 
-function getRandomNumber() {
+/*function getRandomNumber() {
     // Create random array of objects
     return Math.round(20 + 80 * Math.random())
     
-}
+}*/
 
 class SoilMoisture extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        series: [getRandomNumber()],
+        series: [0],
       options: {
         chart: {
           height: 350,
@@ -55,10 +55,29 @@ class SoilMoisture extends Component {
 
   componentDidMount() { //Set update interval
     window.setInterval(() => {
-      this.setState({
+
+      fetch('http://www.smartmonitoring.somee.com/api/Data/GetLastData')
+            .then(res => res.json())
+            .then(resJson => {
+              this.setState({ series: [parseInt(Math.round(resJson[0].soilMoisture, 0))] });
+            }).catch(e => 
+                {
+                    console.log('Error : ' + e);
+                });
+
+      /*fetch("http://www.smartmonitoring.somee.com/api/Data/GetLastData")
+        .then((res) => res.json())
+        .then((resJson) => {
+          this.setState({ series: resJson.soilMoisture });
+        })
+        .catch((e) => {
+          console.log("Error : " + e);
+        });*/
+        
+      /*this.setState({
         series: [getRandomNumber()]
-      })
-    }, 5000)
+      })*/
+    }, 3000)
   }
 
   render() {
