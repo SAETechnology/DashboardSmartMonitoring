@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Temperature from "./Grafik/Temperature";
 import Humidity from "./Grafik/Humidity";
 import SoilMoisture from "./Grafik/SoilMoisture";
+import Tabel from "./Tabel/Tabel";
 
 class ContentComp extends Component {
   constructor(props) {
@@ -66,6 +67,13 @@ class ContentComp extends Component {
                 </Alert>
               </div>
             </div>
+
+            <div className="row mt-5">
+              <div className="col-md-12">
+                <Tabel />
+              </div>
+            </div>
+
           </div>
         </div>
     );

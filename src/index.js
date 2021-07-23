@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { NavbarComp } from "./NavbarComp";
+import NavbarComp from "./NavbarComp";
 import ContentComp from "./ContentComp";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./assets/scss/mdb-free.scss"
+import './assets/css/mdb.css';
 
 ReactDOM.render(
   <React.StrictMode>
-      <NavbarComp />
-      <body className="d-flex flex-column min-vh-100">
-        <ContentComp />      
-      </body>
+    <NavbarComp />
+    <body className="d-flex flex-column min-vh-100">
+      <ContentComp />
+    </body>
   </React.StrictMode>,
   document.getElementById("root")
 );
